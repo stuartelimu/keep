@@ -44,9 +44,22 @@ class App extends Component {
   }
 
   renderSingleItem = id => {
-    let noteData = {}
-    this.setState()
-  }
+    let noteData = {};
+    this.setState({
+      noteList: this.state.noteList.map(noteItem => {
+        if (noteItem.id === id) {
+          noteData = {
+            ...noteItem,
+            isShowing: !noteItem.isShowing
+          };
+
+          return noteData;
+        }
+
+        return noteItem;
+      })
+    });
+  };
 
   renderItems = () => {
     const notes = this.state.noteList.map(note => (
@@ -55,6 +68,7 @@ class App extends Component {
         title={note.title}
         body={note.body}
         updated_at={note.updated_at}
+        isShowing={this.state.isShowing}
       />
     ));
 
@@ -65,9 +79,32 @@ class App extends Component {
     return (
       <Container>
         <Row>
-          <CardColumns>
-            {this.renderItems()}
-          </CardColumns>
+          <CardColumns>{this.renderItems()}</CardColumns>
+
+          <Modal
+            {...props}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Modal heading
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <h4>Centered Modal</h4>
+              <p>
+                Cras mattis consectetur purus sit amet fermentum. Cras justo
+                odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                risus, porta ac consectetur ac, vestibulum at eros.
+              </p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={props.onHide}>Close</Button>
+            </Modal.Footer>
+          </Modal>
+          
         </Row>
       </Container>
     );
