@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 import NoteItem from "./NoteItem";
-import { Container, Row, CardColumns } from "react-bootstrap";
+import MyVerticallyCenteredModal from './components/Modal'
+import { Container, Row, CardColumns, Button, ButtonToolbar } from "react-bootstrap";
 
 const noteItems = [
   {
@@ -39,7 +40,8 @@ class App extends Component {
     super(props);
     this.state = {
       isPinned: false,
-      noteList: noteItems
+      noteList: noteItems,
+      modalShow: false,
     };
   }
 
@@ -81,30 +83,16 @@ class App extends Component {
         <Row>
           <CardColumns>{this.renderItems()}</CardColumns>
 
-          <Modal
-            {...props}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-          >
-            <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title-vcenter">
-                Modal heading
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <h4>Centered Modal</h4>
-              <p>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo
-                odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-                risus, porta ac consectetur ac, vestibulum at eros.
-              </p>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button onClick={props.onHide}>Close</Button>
-            </Modal.Footer>
-          </Modal>
-          
+          <ButtonToolbar>
+            <Button variant="primary" onClick={() => this.setState({modalShow: true})}>
+              Launch vertically centered modal
+            </Button>
+
+            <MyVerticallyCenteredModal
+              show={this.state.modalShow}
+              onHide={() => this.setState({modalShow: false})}
+            />
+          </ButtonToolbar>
         </Row>
       </Container>
     );
