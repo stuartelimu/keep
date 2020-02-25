@@ -9,6 +9,7 @@ import {
   InputGroup
 } from "react-bootstrap";
 import logo from "./logo.svg";
+import 'font-awesome/css/font-awesome.min.css';
 
 function NavigationBar() {
   return (
@@ -28,7 +29,8 @@ function NavigationBar() {
         <Form inline className="ml-5 pl-2">
           <InputGroup>
             <InputGroup.Prepend>
-              <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
+              <InputGroup.Text id="basic-addon1"><i className="fa fa-search" aria-hidden="true"></i>
+</InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl
               placeholder="Search"
@@ -38,8 +40,9 @@ function NavigationBar() {
         </Form>
 
         <Nav className="ml-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#link">Link</Nav.Link>
+          <Nav.Link href="#home"><i className="fa fa-bars" aria-hidden="true"></i>
+</Nav.Link>
+          <Nav.Link href="#link"><i className="fa fa-cog"></i></Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
