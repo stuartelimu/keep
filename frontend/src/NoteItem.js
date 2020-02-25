@@ -3,7 +3,7 @@ import { Card, CardColumns } from "react-bootstrap";
 
 const NoteItem = (props) => {
   return (
-    <Card>
+    <Card onClick={() => props.renderSingleItem(props.id)}>
       <Card.Body>
         <Card.Title>{props.title}</Card.Title>
         <Card.Text>

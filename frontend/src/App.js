@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import NoteItem from "./NoteItem";
+import NavigationBar from "./NavigationBar";
 import MyVerticallyCenteredModal from './components/Modal'
-import { Container, Row, CardColumns, Button, ButtonToolbar } from "react-bootstrap";
+import { Container, Row, CardColumns, Button, Navbar } from "react-bootstrap";
 
 const noteItems = [
   {
@@ -42,25 +43,33 @@ class App extends Component {
       isPinned: false,
       noteList: noteItems,
       modalShow: false,
+      activeItem: {
+        title: "",
+        body: "",
+        updated_at: ""
+      }
     };
+    this.renderSingleItem = this.renderSingleItem.bind(this);
   }
 
   renderSingleItem = id => {
-    let noteData = {};
-    this.setState({
-      noteList: this.state.noteList.map(noteItem => {
-        if (noteItem.id === id) {
-          noteData = {
-            ...noteItem,
-            isShowing: !noteItem.isShowing
-          };
-
-          return noteData;
+    let activeItemNow = {};
+    this.setState(prevState => {
+      const newNotes = prevState.noteList.map(data => {
+        if (data.id === id) {
+          activeItemNow = {
+            title: data.title,
+            body: data.body,
+            updated_at: data.updated_at
+          }
+          return activeItemNow;
         }
-
-        return noteItem;
-      })
-    });
+        return data;
+      });
+      return {noteList: newNotes, activeItem: activeItemNow, modalShow: true}
+    })
+    // this.setState({modalShow: true})
+    console.log(this.state.activeItem);
   };
 
   renderItems = () => {
@@ -71,6 +80,7 @@ class App extends Component {
         body={note.body}
         updated_at={note.updated_at}
         isShowing={this.state.isShowing}
+        renderSingleItem={this.renderSingleItem}
       />
     ));
 
@@ -79,22 +89,30 @@ class App extends Component {
 
   render() {
     return (
-      <Container>
+      <>
+      <NavigationBar />
+      <Container className="mt-5">
         <Row>
           <CardColumns>{this.renderItems()}</CardColumns>
+          
+          <MyVerticallyCenteredModal
+              show={this.state.modalShow}
+              onHide={() => this.setState({modalShow: false})}
+              title={this.state.activeItem.title}
+              body={this.state.activeItem.body}
+              updated_at={this.state.activeItem.updated_at}
+            />
 
-          <ButtonToolbar>
+          {/* <ButtonToolbar>
             <Button variant="primary" onClick={() => this.setState({modalShow: true})}>
               Launch vertically centered modal
             </Button>
 
-            <MyVerticallyCenteredModal
-              show={this.state.modalShow}
-              onHide={() => this.setState({modalShow: false})}
-            />
-          </ButtonToolbar>
+            
+          </ButtonToolbar> */}
         </Row>
       </Container>
+      </>
     );
   }
 }
