@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardColumns } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 
 const NoteItem = (props) => {
   return (

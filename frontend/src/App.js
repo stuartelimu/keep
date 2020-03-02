@@ -3,7 +3,8 @@ import "./App.css";
 import NoteItem from "./NoteItem";
 import NavigationBar from "./NavigationBar";
 import MyVerticallyCenteredModal from './components/Modal'
-import { Container, Row, CardColumns, Button, Navbar } from "react-bootstrap";
+import { Container, Row, CardColumns } from "react-bootstrap";
+import CreateNote from "./CreateNote";
 
 const noteItems = [
   {
@@ -40,17 +41,52 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isPinned: false,
+      
       noteList: noteItems,
       modalShow: false,
-      activeItem: {
+      note: {
+        id: "",
         title: "",
         body: "",
         updated_at: ""
       }
     };
+
     this.renderSingleItem = this.renderSingleItem.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  handleChange(e) {
+    const {name, value} = e.target;
+
+    console.log({[name]: value});
+
+    this.setState({
+      note: {
+        
+        [name]: value,
+
+      }
+    })
+
+  }
+
+  handleSubmit(e) {
+    const savedNote = {id: Date.now(), title: this.state.note.title, body: this.state.note.body, updated_at: "2020-01-21T23:55:48.778936+03:00"}
+
+    this.setState(prevState => {
+      return {
+        noteList: prevState.noteList.concat(savedNote)
+      }
+    })
+
+    e.preventDefault();
+
+    console.log(this.state.noteList);
+
+  }
+
 
   renderSingleItem = id => {
     let activeItemNow = {};
@@ -91,16 +127,20 @@ class App extends Component {
     return (
       <>
       <NavigationBar />
+      
       <Container className="mt-5">
         <Row>
+
+          <CreateNote note={this.state.note} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+
           <CardColumns>{this.renderItems()}</CardColumns>
           
           <MyVerticallyCenteredModal
               show={this.state.modalShow}
               onHide={() => this.setState({modalShow: false})}
-              title={this.state.activeItem.title}
-              body={this.state.activeItem.body}
-              updated_at={this.state.activeItem.updated_at}
+              title={this.state.note.title}
+              body={this.state.note.body}
+              updated_at={this.state.note.updated_at}
             />
 
           {/* <ButtonToolbar>
