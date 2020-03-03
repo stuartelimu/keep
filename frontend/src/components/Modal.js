@@ -1,38 +1,34 @@
-import React, {Component} from 'react'
-import {
-  Modal,
-  Button,
-  Form,
-  Row,
-  Col,
-} from 'react-bootstrap';
+import React, { Component } from "react";
+import { Modal, Button, Form, } from "react-bootstrap";
 
-function MyVerticallyCenteredModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Form>
-      <Modal.Header>
+class MyVerticallyCenteredModal extends Component {
 
-        <input type="text" value={props.title} />
+  constructor(props) {
+    super(props);
+  }
 
-      </Modal.Header>
-      <Modal.Body>
-        
-        <textarea value={props.body} />
-
-        
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-      </Form>
-    </Modal>
-  );
+  render() {
+    return (
+      <Modal
+        {...this.props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Form onSubmit={e => this.props.handleSubmit(e)}>
+          <Modal.Header>
+            <input type="text" value={this.props.title} name="title" onChange={(e) => this.props.handleChange(e)} />
+          </Modal.Header>
+          <Modal.Body>
+            <textarea value={this.props.body} name="body" onChange={(e) => this.props.handleChange(e)} />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button type="submit">Close</Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+    );
+  }
 }
 
 export default MyVerticallyCenteredModal;

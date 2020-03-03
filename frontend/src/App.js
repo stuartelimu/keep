@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import NoteItem from "./NoteItem";
 import NavigationBar from "./NavigationBar";
-import MyVerticallyCenteredModal from './components/Modal'
+import MyVerticallyCenteredModal from "./components/Modal";
 import { Container, Row, CardColumns } from "react-bootstrap";
 import CreateNote from "./CreateNote";
 
@@ -57,32 +57,57 @@ class App extends Component {
   }
 
   handleChange(e) {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
 
     this.setState({
       note: {
         ...this.state.note,
-        [name]: value,
+        [name]: value
       }
-    })
+    });
 
+    console.log(this.state.note);
   }
 
   handleSubmit(e) {
-    const savedNote = {id: Date.now(), title: this.state.note.title, body: this.state.note.body, updated_at: "2020-01-21T23:55:48.778936+03:00"}
-
-    this.setState(prevState => {
-      return {
-        noteList: prevState.noteList.concat(savedNote)
-      }
-    })
-
     e.preventDefault();
 
-    console.log(this.state.noteList);
+    const savedNote = {
+      id: Date.now(),
+      title: this.state.note.title,
+      body: this.state.note.body,
+      updated_at: "2020-01-21T23:55:48.778936+03:00"
+    };
 
+    const updatedNote = this.state.note;
+
+    const updatedNotes = this.state.noteList.map(note => {
+      if (note.id === updatedNote.id) {
+        note = { ...updatedNote };
+      }
+      return note;
+    });
+
+    this.state.showModal
+      ? this.setState({
+          noteList: updatedNotes,
+          showModal: false,
+          note: { id: "", title: "", body: "", updated_at: "" }
+        })
+      : this.setState(prevState => {
+          return {
+            noteList: prevState.noteList.concat(savedNote),
+            note: { id: "", title: "", body: "", updated_at: "" }
+          };
+        });
+
+    console.log(this.state.noteList);
   }
 
+  // handleEdit(e, id) {
+  //   const updatedNote = {id: Date.now(), title: this.state.note.title, body: this.state.note.body, updated_at: "2020-01-21T23:55:48.778936+03:00"}
+
+  // }
 
   renderSingleItem = id => {
     let activeNote = {};
@@ -90,7 +115,7 @@ class App extends Component {
     this.setState({
       noteList: this.state.noteList.map(note => {
         if (note.id === id) {
-          activeNote = { ...note, };
+          activeNote = { ...note };
 
           return activeNote;
         }
@@ -99,28 +124,12 @@ class App extends Component {
       })
     });
 
-    console.log(activeNote)
+    console.log(activeNote);
 
     this.setState({
       note: activeNote,
-      showModal: true,
-    })
-
-    // this.setState(prevState => {
-    //   const newNotes = prevState.noteList.map(data => {
-    //     if (data.id === id) {
-    //       activeItemNow = {
-    //         ...data,
-    //       }
-    //       return activeItemNow;
-    //     }
-    //     return data;
-    //   });
-    //   return {noteList: newNotes, activeItem: activeItemNow, modalShow: true}
-    // })
-    // this.setState({modalShow: true})
-
-    // console.log(this.state.activeItem);
+      showModal: true
+    });
   };
 
   renderItems = () => {
@@ -131,7 +140,6 @@ class App extends Component {
         title={note.title}
         body={note.body}
         updated_at={note.updated_at}
-        isShowing={this.state.isShowing}
         renderSingleItem={this.renderSingleItem}
       />
     ));
@@ -142,32 +150,37 @@ class App extends Component {
   render() {
     return (
       <>
-      <NavigationBar />
-      
-      <Container className="mt-5">
-        <Row>
+        <NavigationBar />
 
-          <CreateNote note={this.state.note} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
+        <Container className="mt-5">
+          <Row>
+            <CreateNote
+              note={this.state.note}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
+            />
 
-          <CardColumns>{this.renderItems()}</CardColumns>
-          
-          <MyVerticallyCenteredModal
+            <CardColumns>{this.renderItems()}</CardColumns>
+
+            <MyVerticallyCenteredModal
               show={this.state.showModal}
-              onHide={() => this.setState({showModal: false})}
+              // onHide={this.handleSubmit}
               title={this.state.note.title}
               body={this.state.note.body}
               updated_at={this.state.note.updated_at}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}
             />
 
-          {/* <ButtonToolbar>
+            {/* <ButtonToolbar>
             <Button variant="primary" onClick={() => this.setState({modalShow: true})}>
               Launch vertically centered modal
             </Button>
 
             
           </ButtonToolbar> */}
-        </Row>
-      </Container>
+          </Row>
+        </Container>
       </>
     );
   }
