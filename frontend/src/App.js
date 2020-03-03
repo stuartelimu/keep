@@ -177,12 +177,15 @@ class App extends Component {
   }
 
   handleDelete(id) {
-    const updatedNotes = this.state.noteList.filter(note => {
-      return note.id !== id;
-    })
+    // const updatedNotes = this.state.noteList.filter(note => {
+    //   return note.id !== id;
+    // })
 
-    this.setState({noteList: updatedNotes});
-    console.log(id);
+    axios.delete(`/api/notes/${id}`)
+      .then(response => this.refreshNoteList())
+
+    // this.setState({noteList: updatedNotes});
+    // console.log(id);
   }
 
   renderSingleItem = id => {
