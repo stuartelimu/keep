@@ -40,6 +40,13 @@ const noteItems = [
 
 let xhr;
 
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
+
+// axios.post("/api/login/", {username: "stue", password: "stue"})
+//   .then(response => console.log("Login", response))
+//   .catch(err => console.log("LOgin failed", err.response))
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -68,6 +75,7 @@ class App extends Component {
     // xhr.send();
 
     // xhr.addEventListener("readystatechange", this.refreshNoteList, false);
+    
 
     this.refreshNoteList();
 
@@ -85,7 +93,7 @@ class App extends Component {
     //   })
     // }
 
-    axios.get("http://127.0.0.1:8000/api/notes/")
+    axios.get("/api/notes/")
       .then(response => this.setState({noteList: response.data}))
     
 
@@ -141,10 +149,11 @@ class App extends Component {
       // xhr.send(JSON.stringify(savedNote));
 
       // xhr.addEventListener("readystatechange", this.refreshNoteList, false);
+      
 
-      axios.post("http://127.0.0.1:8000/api/notes/", savedNote)
+      axios.post("/api/notes/", savedNote)
         .then(response => this.refreshNoteList())
-        .then(response => this.setState({note: { id: "", title: "", body: "", updated_at: "" },
+        .then(response => this.setState({note: {title: "", body: "" },
                 showCreate: false}))
 
     }
