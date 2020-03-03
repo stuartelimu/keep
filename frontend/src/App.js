@@ -97,7 +97,8 @@ class App extends Component {
       : this.setState(prevState => {
           return {
             noteList: prevState.noteList.concat(savedNote),
-            note: { id: "", title: "", body: "", updated_at: "" }
+            note: { id: "", title: "", body: "", updated_at: "" },
+            showCreate: false
           };
         });
 
@@ -150,11 +151,12 @@ class App extends Component {
   render() {
     return (
       <>
-        <NavigationBar />
+        <NavigationBar handleCreate={() => this.setState({showCreate: true})} />
 
         <Container className="mt-5">
           <Row>
             <CreateNote
+              show={this.state.showCreate}
               note={this.state.note}
               handleChange={this.handleChange}
               handleSubmit={this.handleSubmit}

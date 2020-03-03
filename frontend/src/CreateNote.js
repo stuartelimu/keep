@@ -16,7 +16,7 @@ class CreateNote extends Component {
 
   render() {
     return (
-      <Container className="mb-4">
+      <Container className="mb-4" style={{display: this.props.show? null : "none"}}>
         <Row>
           <Col md={{ span: 8, offset: 2 }}>
             <Card>

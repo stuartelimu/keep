@@ -2,16 +2,14 @@ import React from "react";
 import {
   Navbar,
   Nav,
-  Button,
   Form,
   FormControl,
-  Col,
   InputGroup
 } from "react-bootstrap";
 import logo from "./logo.svg";
-import 'font-awesome/css/font-awesome.min.css';
+import "font-awesome/css/font-awesome.min.css";
 
-function NavigationBar() {
+function NavigationBar(props) {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Brand href="#home">
@@ -29,20 +27,21 @@ function NavigationBar() {
         <Form inline className="ml-5 pl-2">
           <InputGroup>
             <InputGroup.Prepend>
-              <InputGroup.Text id="basic-addon1"><i className="fa fa-search" aria-hidden="true"></i>
-</InputGroup.Text>
+              <InputGroup.Text id="basic-addon1">
+                <i className="fa fa-search" aria-hidden="true"></i>
+              </InputGroup.Text>
             </InputGroup.Prepend>
-            <FormControl
-              placeholder="Search"
-              className="mr-sm-2"
-            />
+            <FormControl placeholder="Search" className="mr-sm-2" />
           </InputGroup>
         </Form>
 
         <Nav className="ml-auto">
-          <Nav.Link href="#home"><i className="fa fa-bars" aria-hidden="true"></i>
-</Nav.Link>
-          <Nav.Link href="#link"><i className="fa fa-cog"></i></Nav.Link>
+          <Nav.Link href="#home" onClick={props.handleCreate}>
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+          </Nav.Link>
+          <Nav.Link href="#link">
+            <i className="fa fa-cog"></i>
+          </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
