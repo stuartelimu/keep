@@ -26,7 +26,7 @@ class CreateNote extends Component {
                     <Form.Control type="text" onChange={e => this.props.handleChange(e)} placeholder="Title" name="title" value={this.props.note.title} />
                   </Form.Group>
                   <Form.Group controlId="formGroupBody">
-                    <Form.Control as="textarea" value={this.props.note.body} onChange={e => this.props.handleChange(e)} size="sm" name="body" placeholder="Take a note..." rows="1" />
+                    <Form.Control as="textarea" value={this.props.note.body} onChange={e => this.props.handleChange(e)} size="sm" name="body" placeholder="Take a note..." rows="3" />
                   </Form.Group>
                   <Button variant="primary" type="submit">
                     close

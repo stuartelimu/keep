@@ -41,7 +41,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+      title: "",
+      body: "",
       noteList: noteItems,
       modalShow: false,
       note: {
@@ -60,13 +61,10 @@ class App extends Component {
   handleChange(e) {
     const {name, value} = e.target;
 
-    console.log({[name]: value});
-
     this.setState({
       note: {
-        
+        ...this.state.note,
         [name]: value,
-
       }
     })
 
