@@ -6,12 +6,6 @@ class CreateNote extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      note: {id: "", title: "", body: "", updated_at: ""},
-      
-    };
-
-
   }
 
   render() {

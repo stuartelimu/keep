@@ -5,6 +5,7 @@ import NavigationBar from "./NavigationBar";
 import MyVerticallyCenteredModal from "./components/Modal";
 import { Container, Row, CardColumns } from "react-bootstrap";
 import CreateNote from "./CreateNote";
+import axios from "axios";
 
 const noteItems = [
   {
@@ -43,7 +44,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      noteList: noteItems,
+      noteList: [],
       showModal: false,
       note: {
         
@@ -62,24 +63,31 @@ class App extends Component {
 
   
   componentDidMount() {
-    xhr = new XMLHttpRequest();
-    xhr.open("GET", "http://127.0.0.1:8000/api/notes/", true);
-    xhr.send();
+    // xhr = new XMLHttpRequest();
+    // xhr.open("GET", "http://127.0.0.1:8000/api/notes/", true);
+    // xhr.send();
 
-    xhr.addEventListener("readystatechange", this.refreshNoteList, false);
+    // xhr.addEventListener("readystatechange", this.refreshNoteList, false);
+
+    this.refreshNoteList();
+
   }
 
   refreshNoteList() {
 
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      let response = JSON.parse(xhr.responseText);
+    // if (xhr.readyState === 4 && xhr.status === 200) {
+    //   let response = JSON.parse(xhr.responseText);
 
-      console.log(response);
+    //   console.log(response);
 
-      this.setState({
-        noteList: response
-      })
-    }
+    //   this.setState({
+    //     noteList: response
+    //   })
+    // }
+
+    axios.get("http://127.0.0.1:8000/api/notes/")
+      .then(response => this.setState({noteList: response.data}))
+    
 
   }
 
@@ -124,13 +132,20 @@ class App extends Component {
       })
 
     } else {
-      console.log(savedNote)
-      xhr.open("POST", "http://127.0.0.1:8000/api/notes/", true);
-      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      xhr.setRequestHeader("csrfmiddlewaretoken", "{{ csrf_token }}");
-      xhr.send(JSON.stringify(savedNote));
+      // let csrftoken = document.cookie.replace(/(?:(?:^|.*;\s*)csrftoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+      // console.log(savedNote);
+      // console.log(csrftoken)
+      // xhr.open("POST", "http://127.0.0.1:8000/api/notes/", true);
+      // xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      // xhr.setRequestHeader("X-CSRFToken", csrftoken);
+      // xhr.send(JSON.stringify(savedNote));
 
-      xhr.addEventListener("readystatechange", this.refreshNoteList, false);
+      // xhr.addEventListener("readystatechange", this.refreshNoteList, false);
+
+      axios.post("http://127.0.0.1:8000/api/notes/", savedNote)
+        .then(response => this.refreshNoteList())
+        .then(response => this.setState({note: { id: "", title: "", body: "", updated_at: "" },
+                showCreate: false}))
 
     }
     // this.state.showModal
