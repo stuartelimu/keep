@@ -54,6 +54,8 @@ class App extends Component {
     this.renderSingleItem = this.renderSingleItem.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+
   }
 
   handleChange(e) {
@@ -105,10 +107,14 @@ class App extends Component {
     console.log(this.state.noteList);
   }
 
-  // handleEdit(e, id) {
-  //   const updatedNote = {id: Date.now(), title: this.state.note.title, body: this.state.note.body, updated_at: "2020-01-21T23:55:48.778936+03:00"}
+  handleDelete(id) {
+    const updatedNotes = this.state.noteList.filter(note => {
+      return note.id !== id;
+    })
 
-  // }
+    this.setState({noteList: updatedNotes});
+    console.log(id);
+  }
 
   renderSingleItem = id => {
     let activeNote = {};
@@ -142,6 +148,7 @@ class App extends Component {
         body={note.body}
         updated_at={note.updated_at}
         renderSingleItem={this.renderSingleItem}
+        handleDelete={this.handleDelete}
       />
     ));
 

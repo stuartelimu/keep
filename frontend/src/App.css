@@ -42,7 +42,11 @@ input[type=text]:focus, textarea:focus {
 }
 
 .card-footer {
-  
+  visibility: hidden;
   background-color: #fff;
   border-top: none;
+}
+
+.card:hover .card-footer {
+  visibility: visible;
 }
