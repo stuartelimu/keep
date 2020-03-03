@@ -1,0 +1,30 @@
+input[type=text] {
+  border: none;
+  font-weight: 600;
+  font-size: 23px;
+  /* border-bottom: 2px solid red; */
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+input[type=text]:focus, textarea:focus {
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.modal-header {
+  border-bottom: 0 none;
+}
+
+.modal-footer {
+  border-top: 0 none;
+
+}
+

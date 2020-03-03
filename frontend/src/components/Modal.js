@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import {
   Modal,
   Button,
+  Form,
+  Row,
+  Col,
 } from 'react-bootstrap';
 
 function MyVerticallyCenteredModal(props) {
@@ -12,20 +15,22 @@ function MyVerticallyCenteredModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          {props.title}
-        </Modal.Title>
+      <Form>
+      <Modal.Header>
+
+        <input type="text" value={props.title} />
+
       </Modal.Header>
       <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-        {props.body}
-        </p>
+        
+        <textarea value={props.body} />
+
+        
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
+      </Form>
     </Modal>
   );
 }

@@ -41,10 +41,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
-      body: "",
       noteList: noteItems,
-      modalShow: false,
+      showModal: false,
       note: {
         id: "",
         title: "",
@@ -87,28 +85,48 @@ class App extends Component {
 
 
   renderSingleItem = id => {
-    let activeItemNow = {};
-    this.setState(prevState => {
-      const newNotes = prevState.noteList.map(data => {
-        if (data.id === id) {
-          activeItemNow = {
-            title: data.title,
-            body: data.body,
-            updated_at: data.updated_at
-          }
-          return activeItemNow;
+    let activeNote = {};
+    console.log(id);
+    this.setState({
+      noteList: this.state.noteList.map(note => {
+        if (note.id === id) {
+          activeNote = { ...note, };
+
+          return activeNote;
         }
-        return data;
-      });
-      return {noteList: newNotes, activeItem: activeItemNow, modalShow: true}
+
+        return note;
+      })
+    });
+
+    console.log(activeNote)
+
+    this.setState({
+      note: activeNote,
+      showModal: true,
     })
+
+    // this.setState(prevState => {
+    //   const newNotes = prevState.noteList.map(data => {
+    //     if (data.id === id) {
+    //       activeItemNow = {
+    //         ...data,
+    //       }
+    //       return activeItemNow;
+    //     }
+    //     return data;
+    //   });
+    //   return {noteList: newNotes, activeItem: activeItemNow, modalShow: true}
+    // })
     // this.setState({modalShow: true})
-    console.log(this.state.activeItem);
+
+    // console.log(this.state.activeItem);
   };
 
   renderItems = () => {
     const notes = this.state.noteList.map(note => (
       <NoteItem
+        id={note.id}
         key={note.id}
         title={note.title}
         body={note.body}
@@ -134,8 +152,8 @@ class App extends Component {
           <CardColumns>{this.renderItems()}</CardColumns>
           
           <MyVerticallyCenteredModal
-              show={this.state.modalShow}
-              onHide={() => this.setState({modalShow: false})}
+              show={this.state.showModal}
+              onHide={() => this.setState({showModal: false})}
               title={this.state.note.title}
               body={this.state.note.body}
               updated_at={this.state.note.updated_at}
