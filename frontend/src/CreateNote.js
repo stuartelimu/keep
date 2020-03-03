@@ -23,10 +23,10 @@ class CreateNote extends Component {
               <Card.Body>
                 <Form onSubmit={e => this.props.handleSubmit(e)}>
                   <Form.Group controlId="formGroupTitle">
-                    <Form.Control type="text" onChange={e => this.props.handleChange(e)} placeholder="Title" name="title" value={this.props.note.title} />
+                    <input type="text" onChange={e => this.props.handleChange(e)} placeholder="Title" name="title" value={this.props.note.title} />
                   </Form.Group>
                   <Form.Group controlId="formGroupBody">
-                    <Form.Control as="textarea" value={this.props.note.body} onChange={e => this.props.handleChange(e)} size="sm" name="body" placeholder="Take a note..." rows="3" />
+                    <textarea value={this.props.note.body} onChange={e => this.props.handleChange(e)} size="sm" name="body" placeholder="Take a note..." />
                   </Form.Group>
                   <Button variant="primary" type="submit">
                     close
