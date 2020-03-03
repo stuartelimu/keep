@@ -133,11 +133,16 @@ class App extends Component {
 
     if (this.state.showModal) {
 
-      this.setState({
-        noteList: updatedNotes,
-        showModal: false,
-        note: { id: "", title: "", body: "", updated_at: "" }
-      })
+      // this.setState({
+      //   noteList: updatedNotes,
+      //   showModal: false,
+      //   note: { id: "", title: "", body: "", updated_at: "" }
+      // })
+
+      axios.put(`/api/notes/${updatedNote.id}/`, updatedNote)
+        .then(response => this.refreshNoteList())
+        .then(response => this.setState({note: {title: "", body: "" },
+        showModal: false}))
 
     } else {
       // let csrftoken = document.cookie.replace(/(?:(?:^|.*;\s*)csrftoken\s*\=\s*([^;]*).*$)|^.*$/, "$1");
