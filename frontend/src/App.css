@@ -28,3 +28,21 @@ input[type=text]:focus, textarea:focus {
 
 }
 
+.action-button {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.action-button:hover {
+  background-color: #343a40 !important;
+  color: #fff;
+  cursor: pointer;
+}
+
+.card-footer {
+  
+  background-color: #fff;
+  border-top: none;
+}
