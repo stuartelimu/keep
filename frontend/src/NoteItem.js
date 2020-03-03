@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, ButtonGroup, ButtonToolbar, Button } from "react-bootstrap";
+import { Card, ButtonGroup, ButtonToolbar } from "react-bootstrap";
 
 const NoteItem = props => {
   return (

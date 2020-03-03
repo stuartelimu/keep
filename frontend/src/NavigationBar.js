@@ -37,7 +37,7 @@ function NavigationBar(props) {
 
         <Nav className="ml-auto">
           <Nav.Link href="#home" onClick={props.handleCreate}>
-            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+            <i className="fa fa-plus-circle" aria-hidden="true"></i>
           </Nav.Link>
           <Nav.Link href="#link">
             <i className="fa fa-cog"></i>

@@ -37,6 +37,8 @@ const noteItems = [
   }
 ];
 
+let xhr;
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -44,10 +46,10 @@ class App extends Component {
       noteList: noteItems,
       showModal: false,
       note: {
-        id: "",
+        
         title: "",
         body: "",
-        updated_at: ""
+        
       }
     };
 
@@ -55,6 +57,29 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.refreshNoteList = this.refreshNoteList.bind(this);
+  }
+
+  
+  componentDidMount() {
+    xhr = new XMLHttpRequest();
+    xhr.open("GET", "http://127.0.0.1:8000/api/notes/", true);
+    xhr.send();
+
+    xhr.addEventListener("readystatechange", this.refreshNoteList, false);
+  }
+
+  refreshNoteList() {
+
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      let response = JSON.parse(xhr.responseText);
+
+      console.log(response);
+
+      this.setState({
+        noteList: response
+      })
+    }
 
   }
 
@@ -75,10 +100,10 @@ class App extends Component {
     e.preventDefault();
 
     const savedNote = {
-      id: Date.now(),
+      
       title: this.state.note.title,
       body: this.state.note.body,
-      updated_at: "2020-01-21T23:55:48.778936+03:00"
+      
     };
 
     const updatedNote = this.state.note;
@@ -90,19 +115,39 @@ class App extends Component {
       return note;
     });
 
-    this.state.showModal
-      ? this.setState({
-          noteList: updatedNotes,
-          showModal: false,
-          note: { id: "", title: "", body: "", updated_at: "" }
-        })
-      : this.setState(prevState => {
-          return {
-            noteList: prevState.noteList.concat(savedNote),
-            note: { id: "", title: "", body: "", updated_at: "" },
-            showCreate: false
-          };
-        });
+    if (this.state.showModal) {
+
+      this.setState({
+        noteList: updatedNotes,
+        showModal: false,
+        note: { id: "", title: "", body: "", updated_at: "" }
+      })
+
+    } else {
+      console.log(savedNote)
+      xhr.open("POST", "http://127.0.0.1:8000/api/notes/", true);
+      xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xhr.setRequestHeader("csrfmiddlewaretoken", "{{ csrf_token }}");
+      xhr.send(JSON.stringify(savedNote));
+
+      xhr.addEventListener("readystatechange", this.refreshNoteList, false);
+
+    }
+    // this.state.showModal
+    //   ? this.setState({
+    //       noteList: updatedNotes,
+    //       showModal: false,
+    //       note: { id: "", title: "", body: "", updated_at: "" }
+    //     })
+    //   : this.setState(prevState => {
+    //       return {
+    //         noteList: prevState.noteList.concat(savedNote),
+    //         note: { id: "", title: "", body: "", updated_at: "" },
+    //         showCreate: false
+    //       };
+    //     });
+
+
 
     console.log(this.state.noteList);
   }
