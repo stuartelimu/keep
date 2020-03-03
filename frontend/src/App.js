@@ -56,7 +56,8 @@ class App extends Component {
 
     axios
       .get("/api/notes/")
-      .then(response => this.setState({ noteList: response.data }));
+      .then(response => this.setState({ noteList: response.data }))
+      .catch(err => console.log("error", err.response))
   }
 
   handleChange(e) {
