@@ -55,7 +55,7 @@ class App extends Component {
     // }
 
     axios
-      .get("/api/notes/")
+      .get("http://2d616b39.ngrok.io/api/notes/")
       .then(response => this.setState({ noteList: response.data }))
       .catch(err => console.log("error", err.response))
   }
@@ -83,14 +83,14 @@ class App extends Component {
 
     if (this.state.showModal) {
       axios
-        .put(`/api/notes/${updatedNote.id}/`, updatedNote)
+        .put(`http://2d616b39.ngrok.io/api/notes/${updatedNote.id}/`, updatedNote)
         .then(response => this.refreshNoteList())
         .then(response =>
           this.setState({ note: { title: "", body: "" }, showModal: false })
         );
     } else {
       axios
-        .post("/api/notes/", savedNote)
+        .post("http://2d616b39.ngrok.io/api/notes/", savedNote)
         .then(response => this.refreshNoteList())
         .then(response =>
           this.setState({ note: { title: "", body: "" }, showCreate: false })
@@ -99,7 +99,7 @@ class App extends Component {
   }
 
   handleDelete(id) {
-    axios.delete(`/api/notes/${id}`).then(response => this.refreshNoteList());
+    axios.delete(`http://2d616b39.ngrok.io/api/notes/${id}`).then(response => this.refreshNoteList());
   }
 
   renderSingleItem = id => {
