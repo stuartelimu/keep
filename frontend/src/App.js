@@ -6,6 +6,7 @@ import MyVerticallyCenteredModal from "./components/Modal";
 import { Container, Row, CardColumns } from "react-bootstrap";
 import CreateNote from "./CreateNote";
 import axios from "axios";
+import { Remarkable } from 'remarkable';
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -55,7 +56,7 @@ class App extends Component {
     // }
 
     axios
-      .get("http://2d616b39.ngrok.io/api/notes/")
+      .get("/api/notes/")
       .then(response => this.setState({ noteList: response.data }))
       .catch(err => console.log("error", err.response))
   }
@@ -83,14 +84,14 @@ class App extends Component {
 
     if (this.state.showModal) {
       axios
-        .put(`http://2d616b39.ngrok.io/api/notes/${updatedNote.id}/`, updatedNote)
+        .put(`/api/notes/${updatedNote.id}/`, updatedNote)
         .then(response => this.refreshNoteList())
         .then(response =>
           this.setState({ note: { title: "", body: "" }, showModal: false })
         );
     } else {
       axios
-        .post("http://2d616b39.ngrok.io/api/notes/", savedNote)
+        .post("/api/notes/", savedNote)
         .then(response => this.refreshNoteList())
         .then(response =>
           this.setState({ note: { title: "", body: "" }, showCreate: false })
@@ -99,7 +100,14 @@ class App extends Component {
   }
 
   handleDelete(id) {
-    axios.delete(`http://2d616b39.ngrok.io/api/notes/${id}`).then(response => this.refreshNoteList());
+    axios.delete(`/api/notes/${id}`).then(response => this.refreshNoteList());
+  }
+
+  getRawMarkup() {
+
+    const md = new Remarkable();
+
+    return { __html: md.render(this.state.body)}
   }
 
   renderSingleItem = id => {
@@ -131,7 +139,7 @@ class App extends Component {
         id={note.id}
         key={note.id}
         title={note.title}
-        body={note.body}
+        body={this.getRawMarkup()}
         updated_at={note.updated_at}
         renderSingleItem={this.renderSingleItem}
         handleDelete={this.handleDelete}

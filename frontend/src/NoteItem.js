@@ -6,7 +6,7 @@ const NoteItem = props => {
     <Card>
       <Card.Body onClick={() => props.renderSingleItem(props.id)}>
         <Card.Title>{props.title}</Card.Title>
-        <Card.Text>{props.body}</Card.Text>
+        <Card.Text dangerouslySetInnerHTML={props.body}></Card.Text>
       </Card.Body>
       <Card.Footer>
         <ButtonToolbar aria-label="Toolbar with button groups">

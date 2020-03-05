@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://2d616b39.ngrok.io",
+  "proxy": "http://127.0.0.1:8000",
   "homepage": "http://github.stuartelimu.me/keep/",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -15,7 +15,9 @@
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.0"
+    "react-scripts": "3.3.0",
+    "remarkable": "^2.0.0",
+    "remarkable-react": "^1.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
