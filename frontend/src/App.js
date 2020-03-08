@@ -131,10 +131,7 @@ class App extends Component {
       <NoteItem
         key={note.id}
         item={note}
-        // id={note.id}
-        // title={note.title}
-        // body={this.getRawMarkup()}
-        // updated_at={note.updated_at}
+        
         renderSingleItem={this.renderSingleItem}
         handleDelete={this.handleDelete}
       />
