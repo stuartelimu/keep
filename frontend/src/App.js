@@ -6,7 +6,6 @@ import MyVerticallyCenteredModal from "./components/Modal";
 import { Container, Row, CardColumns } from "react-bootstrap";
 import CreateNote from "./CreateNote";
 import axios from "axios";
-import { Remarkable } from 'remarkable';
 
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -103,12 +102,6 @@ class App extends Component {
     axios.delete(`/api/notes/${id}`).then(response => this.refreshNoteList());
   }
 
-  getRawMarkup() {
-
-    const md = new Remarkable();
-
-    return { __html: md.render(this.state.body)}
-  }
 
   renderSingleItem = id => {
     let activeNote = {};
@@ -136,11 +129,12 @@ class App extends Component {
   renderItems = () => {
     const notes = this.state.noteList.map(note => (
       <NoteItem
-        id={note.id}
         key={note.id}
-        title={note.title}
-        body={this.getRawMarkup()}
-        updated_at={note.updated_at}
+        item={note}
+        // id={note.id}
+        // title={note.title}
+        // body={this.getRawMarkup()}
+        // updated_at={note.updated_at}
         renderSingleItem={this.renderSingleItem}
         handleDelete={this.handleDelete}
       />

@@ -33,21 +33,4 @@ class MyVerticallyCenteredModal extends Component {
 
 export default MyVerticallyCenteredModal;
 
-// function App() {
-//   const [modalShow, setModalShow] = React.useState(false);
 
-//   return (
-//     <ButtonToolbar>
-//       <Button variant="primary" onClick={() => setModalShow(true)}>
-//         Launch vertically centered modal
-//       </Button>
-
-//       <MyVerticallyCenteredModal
-//         show={modalShow}
-//         onHide={() => setModalShow(false)}
-//       />
-//     </ButtonToolbar>
-//   );
-// }
-
-// render(<App />);
