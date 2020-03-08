@@ -55,7 +55,7 @@ class App extends Component {
     // }
 
     axios
-      .get("/api/notes/")
+      .get("https://stues-keep.herokuapp.com/api/notes/")
       .then(response => this.setState({ noteList: response.data }))
       .catch(err => console.log("error", err.response))
   }
@@ -83,14 +83,14 @@ class App extends Component {
 
     if (this.state.showModal) {
       axios
-        .put(`/api/notes/${updatedNote.id}/`, updatedNote)
+        .put(`https://stues-keep.herokuapp.com/api/notes/${updatedNote.id}/`, updatedNote)
         .then(response => this.refreshNoteList())
         .then(response =>
           this.setState({ note: { title: "", body: "" }, showModal: false })
         );
     } else {
       axios
-        .post("/api/notes/", savedNote)
+        .post("https://stues-keep.herokuapp.com/api/notes/", savedNote)
         .then(response => this.refreshNoteList())
         .then(response =>
           this.setState({ note: { title: "", body: "" }, showCreate: false })
@@ -99,7 +99,7 @@ class App extends Component {
   }
 
   handleDelete(id) {
-    axios.delete(`/api/notes/${id}`).then(response => this.refreshNoteList());
+    axios.delete(`https://stues-keep.herokuapp.com/api/notes/${id}`).then(response => this.refreshNoteList());
   }
 
 
